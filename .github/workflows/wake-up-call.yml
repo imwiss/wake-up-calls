@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   schedule:
 #     - cron: '0 9 * * *' # every day at 9 am UTC
-    - cron: '10 16 * * *' # every day at 16:10 am UTC
+    - cron: '25 16 * * *' # every day at 16:10 am UTC
       
 jobs:
   wake-up-call:
@@ -11,7 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Make a Twilio call through curl
-        uses: wei/curl@v1.1.1
+      - name: Twilio Voice Call
+        # You may pin to the exact commit or the version.
+        # uses: fabasoad/twilio-voice-call-action@3fcb40374f6352418ec45bd14c35823a021219aa
+        uses: fabasoad/twilio-voice-call-action@v1.1.2
         with:
-          args: -X POST  https://api.twilio.com/2010-04-01/Accounts/${{ secrets.ACCOUNT_ID }}/Calls.json --data-urlencode "To=${{ secrets.TO_NUMBER }}" --data-urlencode "From=${{ secrets.FROM_NUMBER }}" --data-urlencode "Url=https://handler.twilio.com/twiml/${{ secrets.TWIML_ID }}" -u ' ${{ secrets.ACCOUNT_ID }}:${{ secrets.TOKEN }}'
+          # Twilio Account SID.
+          twilio_account_sid: ${{ secrets.ACCOUNT_ID }}
+          # Twilio Auth token.
+          twilio_auth_token: ${{ secrets.TOKEN }}
+          # Text that will be send by voice call.
+          text: "This is your wake up call. Have a great day."
+          # Phone number in your Twilio account to send the voice call from.
+          from: ${{ secrets.FROM_NUMBER }}
+          # Phone number to send the voice call to.
+          to: ${{ secrets.TO_NUMBER }}
