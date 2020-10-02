@@ -1,5 +1,6 @@
 name: Wake up call
 on:
+  workflow_dispatch:
   schedule:
 #     - cron: '0 9 * * *' # every day at 9 am UTC
     - cron: '10 16 * * *' # every day at 16:10 am UTC
