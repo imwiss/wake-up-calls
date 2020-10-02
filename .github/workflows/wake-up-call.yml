@@ -1,0 +1,20 @@
+name: Wake up call
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * *' # Top of every hour
+
+jobs:
+  wake-up-call:
+    name: wake up call
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Make a Twilio call through curl
+      uses: wei/curl@v1.1.1
+      env:
+        FROM_NUMBER: ${{ secrets.FROM_NUMBER }}
+        TO_NUMBER: ${{ secrets.TO_NUMBER }}
+        TWIML_ID: ${{ secrets.TWIML_ID }}
+        ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
+        TOKEN: ${{ secrets.TOKEN }}
