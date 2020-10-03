@@ -2,7 +2,7 @@ name: Wake up call
 on:
   workflow_dispatch:
   schedule:
-    - cron: ${{ secrets.ALARM_TIME }} # in UTC time
+    - cron: '0 9 * * *' # every day at 9 am UTC
       
 jobs:
   wake-up-call:
